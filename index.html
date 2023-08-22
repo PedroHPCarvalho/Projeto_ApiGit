@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>GitHub Favorites</title>
 </head>
 <body>
-  
+  <div id="app">
+    <header>
+      <h1>GitHub Favorites</h1>
+      <div class="search">
+        <label for="input-search">GitHub User</label>
+        <input id="input-search" type="text" placeholder="GitHub User">
+        <button>&plus;</button>
+      </div>
+    </header>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Repositories</th>
+          <th>Followers</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <td class="user">
+          <img src="https://github.com/PedroHPCarvalho.png" alt="Imagem do Usuário">
+          <a href="https://github.com/PedroHPCarvalho" target="_blank">
+            <p>Pedro Carvalho</p>
+            <span>PedroHPCarvalho</span>
+        </td>
+        <td class="Repositories">
+
+        </td>
+        <td class="Followers">
+        </td>
+        <td>
+          <button>&times;</button>
+        </td>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>
