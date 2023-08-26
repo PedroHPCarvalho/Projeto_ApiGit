@@ -33,6 +33,12 @@ export class Favorites
     
   }
 
+  async add(username)
+  {
+    const user = await GitHubUser.search(username)
+    console.log(user)
+  }
+
   delete(user)
   {
     //Higher-order functions (map,filter,find,reduce)
@@ -52,7 +58,16 @@ export class FavoritesView extends Favorites
 
     this.tbody =  this.root.querySelector('table tbody')
     this.update()
+    this.onadd()
+  }
 
+  onadd()
+  {
+    const addButton = this.root.querySelector('.search button')
+    addButton.onclick = () => {
+      const { value } = this.root.querySelector('.search input')
+      this.add(value)
+    }
   }
 
   update()
