@@ -1,3 +1,20 @@
+//classe que possui um método estatico, que tem como função requisitar o json da api e formata-lo como um objeto
+export class GitHubUser {
+  static search (username)
+  {
+    const endpoint = `https://api.github.com/users/${username}`
+
+    return fetch (endpoint)
+    .then(data => data.json())
+    .then(({login,name,public_repos,followers}) => ({
+      login,
+      name,
+      public_repos,
+      followers
+    }))
+  }
+}
+
 //classe que irá conter a lógica dos dados
 //como os dados serão estruturados
 export class Favorites
@@ -6,6 +23,8 @@ export class Favorites
   {
     this.root = document.querySelector(root)
     this.load()
+
+    //GitHubUser.search('PedroHPCarvalho').then(user => console.log(user))
   }
 
   load()
