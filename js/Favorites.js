@@ -33,19 +33,38 @@ export class Favorites
     
   }
 
-  async add(username)
-  {
-    const user = await GitHubUser.search(username)
-    console.log(user)
+  save() {
+    localStorage.setItem('@github-favorites:', JSON.stringify(this.entries))
+  }
+
+  async add(username){
+    try{
+      const user = await GitHubUser.search(username)
+
+      if(user.login === undefined)
+      {
+        throw new Error ('Usuário não encontrado')
+      }
+
+      this.entries = [user, ...this.entries]
+      this.update()
+      this.save()
+
+    }catch(error)
+    {
+      alert(error.message)
+    }
   }
 
   delete(user)
   {
     //Higher-order functions (map,filter,find,reduce)
-    const filteredEntries = this.entries.filter(entry => entry.login !== user)
+    const filteredEntries = this.entries
+      .filter(entry => entry.login !== user.login)
 
     this.entries = filteredEntries
     this.update()
+    this.save()
   }
 }
 
@@ -127,7 +146,7 @@ export class FavoritesView extends Favorites
   removeAllTr()
   {
     this.tbody.querySelectorAll('tr')
-    .forEach(() => {
+    .forEach((tr) => {
       tr.remove()
     })
   }
