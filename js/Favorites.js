@@ -1,20 +1,4 @@
-//classe que possui um método estatico, que tem como função requisitar o json da api e formata-lo como um objeto
-export class GitHubUser {
-  static search (username)
-  {
-    const endpoint = `https://api.github.com/users/${username}`
-
-    return fetch (endpoint)
-    .then(data => data.json())
-    .then(({login,name,public_repos,followers}) => ({
-      login,
-      name,
-      public_repos,
-      followers
-    }))
-  }
-}
-
+import { GitHubUser } from "./GitHubUser.js"
 //classe que irá conter a lógica dos dados
 //como os dados serão estruturados
 export class Favorites
@@ -39,6 +23,13 @@ export class Favorites
 
   async add(username){
     try{
+      const userExist = this.entries.find(entry => entry.login === username)
+
+      if(userExist)
+      {
+        throw new Error('Usuário já cadastrado')
+      }
+
       const user = await GitHubUser.search(username)
 
       if(user.login === undefined)
@@ -101,6 +92,7 @@ export class FavoritesView extends Favorites
 
       row.querySelector('.user img').src = `https://github.com/${user.login}.png`
       row.querySelector('.user img').alt = `Imagem de ${user.login}`
+      row.querySelector('.user a').href = `https://github.com/${user.login}`
       row.querySelector('.user p').textContent = user.name
       row.querySelector('.user span').textContent = user.login
       row.querySelector('.repositories').textContent = user.public_repos
